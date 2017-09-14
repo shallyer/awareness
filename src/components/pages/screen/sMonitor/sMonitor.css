@@ -1,0 +1,325 @@
+.sMonitor_root {
+		width: 100%;
+		height: 100%;
+		margin: 0 auto;
+	}
+	
+	.sMonitor_root_Top {
+		width: 30%;
+		height: 94%;
+		float: left;
+		margin-top: 1%;
+		padding-left: 15px;
+		box-sizing: border-box;
+	}
+	
+	.sMonitor_left {
+		float: left;
+		width: 40%;
+		height: 94%;
+		margin-top: 1%;
+		padding-left: 15px;
+		box-sizing: border-box;
+	}
+	
+	.sMonitor_events {
+		width: 30%;
+		height: 94%;
+		float: left;
+		margin-top: 1%;
+		padding-left: 15px;
+		position: relative;
+		box-sizing: border-box;
+	}
+	
+	.sMonitor_map {
+		width: 100%;
+		height: 70%;
+		background: rgba(255, 255, 255, .1)!important;
+		overflow: hidden;
+		border-radius: 8px;
+	}
+	.bottom_left{
+		width:49%;
+		height: 100%;
+		border-radius: 8px;
+		float: left;
+
+
+	}
+	.bottom_left .publicchart ul li {
+		color: #c9daf4;
+		font-size: 1rem;
+		width: 100%;
+		height: 20%;
+		padding-left: 3%;
+	}
+
+		
+	.sMonitor_left .real_time {
+		width: 49%;
+		height: 23%;
+		border-radius: 8px;
+		float: right;
+	}
+	
+	.sMonitor_left .real_time ul li {
+		color: #c9daf4;
+		font-size: 1rem;
+		width: 100%;
+		height: 20%;
+		padding-left: 3%;
+	}
+	
+	.chooseWorld #togglechartWorld:active {
+		color: #fff;
+		border-color: #fff;
+		background: #004882;
+	}
+	
+	.chooseWorld #togglechartChina:active {
+		color: #fff;
+		border-color: #fff;
+		background: #004882;
+	}
+	
+	.parentboxstyle {
+		height: 100%;
+		border-radius: 8px;
+		float: left;
+		box-sizing: border-box;
+	}
+	
+	.Top_echartOne {
+		float: left;
+		width:100%;
+	}
+	
+	.Top_echartTwo {
+		float: right;
+		
+	}
+	
+	.Top_echartThree {
+		float: left;
+	}
+	
+	.Top_echartFour {
+		float: right;
+		width:100%;
+	}
+	
+	.buttonstyle {
+		outline-style: none;
+		margin-top: 20px;
+		cursor: pointer;
+		font-size: 1rem;
+		line-height: 25px;
+		z-index: 9999999;
+		color: #c9daf4;
+		width: 6%;
+		height: 32px;
+		line-height: 32px;
+		text-align: center;
+		background: #182d57;
+		border: 1px solid #004882;
+	}
+	
+	.chooseWorld {
+		width: 100%;
+		height: 5%;
+		position: absolute;
+		left: 43%;
+		z-index: 9999999;
+		top: 6%;
+	}
+	
+	.sMonitor_map .con {
+		width: 100%;
+		height: 95%;
+	}
+	
+	.sMonitor_events #sMonitor_events_top {
+		width: 100%;
+		height: 49.2%;
+		border-radius: 4px;
+		overflow: hidden;
+		border-radius: 8px;
+	}
+	
+	.sMonitor_events .sMonitor_events_bottom {
+		width: 100%;
+		height: 49.2%;
+		margin-top: 15px;
+		overflow: hidden;
+		border-radius: 8px;
+	}
+	
+	.sMonitor_events .sMonitor_echarts_Box_btn {
+		width: 50%;
+		height: 5%;
+		position: absolute;
+		z-index: 999999;
+		top: 43px;
+		left: 35px;
+	}
+	
+	.sMonitor_events .sMonitor_echarts_Box_btn button {
+		width: 20px;
+		height: 20px;
+		outline-style: none;
+		border: 1px solid #c9daf4;
+		background-color: rgba(0, 0, 0, .5);
+		color: #c9daf4;
+		cursor: pointer;
+		line-height: 20px;
+	}
+	
+	.sMonitor_events .sMonitor_echarts_Box_btn button:hover {
+		background-color: 
+
+
+
+		#c9daf4;
+		color: #009eff;
+
+
+	}
+	
+	.chinaInfor li {
+		width: 100%;
+		height: 20px;
+
+
+		box-sizing: border-box;
+		line-height: 40px;
+		text-align: center;
+	}
+	
+	.chinaInfor li p {
+		width: 30%;
+		height: 100%;
+		float: left;
+	}
+	
+	.worldInfor {
+		padding: 1%;
+	}
+	
+	.worldInfor li {
+		width: 100%;
+		height: 20px;
+		box-sizing: border-box;
+		line-height: 40px;
+		text-align: center;
+	}
+	
+	.real_time .worldInfor li p {
+		width: 30%;
+		height: 100%;
+		float: left;
+	}
+	
+	.sMonitor_map_bottom {
+		width: 100%;
+		height: 28%;
+		margin-top: 16px;
+		position: relative;
+	}
+	
+	.sMonitor_root .number {
+		width: 100%;
+		height: 28%;
+		color: #c9daf4;
+		font-size: 2rem;
+		margin-top: 15px;
+		overflow: hidden;
+		border-radius: 8px;
+	}
+	
+	.number ul {
+		width: 100%;
+		height: 100%;
+		margin-left: 8%;
+		float: left;
+	}
+	
+	.number ul li {
+		width: 80%;
+		height: 17%;
+		margin-top: 10px;
+		font-size: 1.6rem;
+		text-align: center;
+		border-radius: 4px;
+		color: #FFFFFF;
+		position: relative;
+		line-height: 30px;
+	}
+	
+	.number ul li:nth-child(2n) {
+		background-color: #0088EE;
+	}
+	
+	.number ul li:first-child {
+		background-color: #EBA954;
+	}
+	
+	.number ul li:nth-child(3n) {
+		background-color: #EBA954;
+	}
+	
+	.number ul li i {
+		position: absolute;
+		top: 5px;
+		left: 20px;
+	}
+	
+	.number ul li span {
+		font-family: 'fontNameQarmicsans';
+		font-size: 2rem;
+		font-weight: bold;
+	}
+	
+	.sMonitor_root .public_chart_p {
+		width: 95%;
+		height: 13%;
+		line-height: 30px;
+		color: #c9daf4;
+		font-size: 1.4rem;
+		font-weight: bold;
+		margin-bottom: 2px;
+		padding-left: 5%;
+		background: rgba(255, 255, 255, .1)!important;
+		border-radius: 6px 6px 0 0;
+	}
+	
+	.sMonitor_root .public_chart_p2 {
+		width: 100%;
+		height: 9%;
+		line-height: 30px;
+		color: #c9daf4;
+		font-size: 1.4rem;
+		font-weight: bold;
+		margin-bottom: 2px;
+		padding-left: 20px;
+		background: rgba(255, 255, 255, .1)!important;
+	}
+	
+	.sMonitor_root .publicchart {
+		width: 100%;
+		height: 85%;
+		background: rgba(255, 255, 255, .1)!important;
+		border-radius: 0 0 8px 8px;
+	}
+	
+	.sMonitor_root .publicchart2 {
+		width: 100%;
+		height: 90%;
+		background: rgba(255, 255, 255, .1)!important;
+		border-radius: 0 0 8px 8px;
+	}
+	
+	.chartContainer {
+		padding: 15px 0 0 15px;
+		box-sizing: border-box;
+	}

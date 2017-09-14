@@ -1,0 +1,98 @@
+callback({
+	 nodes: [
+        {
+            name: "总体"
+        },
+        {
+            name: "入"
+        },
+        {
+            name: "出"
+        },
+        {
+            name: "IP"
+        },
+        {
+            name: "ICMP"
+        },
+        {
+            name: "ARP"
+        },
+        {
+            name: "TCP"
+        },
+        {
+            name: "UDP"
+        },
+        {
+            name: "HTTP"
+        },
+        {
+            name: "FTP"
+        },
+        {
+            name: "POP3"
+        },
+        {
+            name: "SSH"
+        }
+    ],
+    links: [
+        {
+            source: "Total",
+            target: "入",
+            value: 0.60
+        },
+        {
+            source: "Total",
+            target: "出",
+            value: 0.40
+        },
+		{
+            source: "入",
+            target: "IP",
+            value: 0.20
+        },
+		{
+            source: "入",
+            target: "ICMP",
+            value: 0.20
+        },
+		{
+            source: "入",
+            target: "ARP",
+            value: 0.60
+        },
+		{
+            source: "出",
+            target: "IP",
+            value: 0.10
+        },
+		{
+            source: "出",
+            target: "ICMP",
+            value: 0.20
+        },
+		{
+            source: "出",
+            target: "ARP",
+            value: 0.70
+        },
+		{
+            source: "IP",
+            target: "TCP",
+            value: 1
+        },
+		{
+            source: "TCP",
+            target: "HTTP",
+            value: 0.5
+        },
+		{
+            source: "TCP",
+            target: "FTP",
+            value: 0.5
+        }
+    ]
+});
+

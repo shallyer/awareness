@@ -1,0 +1,230 @@
+{
+    "topoid": "demo0001",
+    "nodenum": 5,
+    "childs": [
+        {
+            "deviceid": "001",
+            "elementType": "link",
+            "deviceA": "004",
+            "deviceZ": "007",
+            "scaleX": "1",
+            "scaleY": "1",
+            "linkType": "flexional_link"
+        },
+        {
+            "deviceid": "002",
+            "elementType": "link",
+            "deviceA": "004",
+            "deviceZ": "008",
+            "scaleX": "1",
+            "scaleY": "1",
+            "linkType": "flexional_link"
+        },
+        {
+            "deviceid": "012",
+            "elementType": "link",
+            "deviceA": "004",
+            "deviceZ": "009",
+            "scaleX": "1",
+            "scaleY": "1",
+            "linkType": "flexional_link"
+        },
+        {
+            "deviceid": "013",
+            "elementType": "link",
+            "deviceA": "004",
+            "deviceZ": "010",
+            "scaleX": "1",
+            "scaleY": "1",
+            "linkType": "flexional_link"
+        },
+        {
+            "deviceid": "014",
+            "elementType": "link",
+            "deviceA": "004",
+            "deviceZ": "005",
+            "scaleX": "1",
+            "scaleY": "1",
+            "linkType": "link"
+        },
+        {
+            "deviceid": "015",
+            "elementType": "link",
+            "deviceA": "006",
+            "deviceZ": "003",
+            "scaleX": "1",
+            "scaleY": "1",
+            "linkType": "link"
+        },
+        {
+            "deviceid": "003",
+            "elementType": "node",
+            "x": 500,
+            "y": 150,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "firewall.png",
+            "warn": null,
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "host":"ddd",
+                "devicename": "防火墙"
+            }
+        },
+        {
+            "deviceid": "004",
+            "elementType": "node",
+            "x": 320,
+            "y": 303,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "level2_switch.png",
+            "warn": null,
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "devicename": "二级交换机"
+            }
+        },
+        {
+            "deviceid": "005",
+            "elementType": "node",
+            "x": 200,
+            "y": 150,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "server.png",
+            "warn": "系统重启",
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "devicename": "数据服务器"
+            }
+        },
+        {
+            "deviceid": "006",
+            "elementType": "node",
+            "x": 500,
+            "y": 300,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "router.png",
+            "warn": null,
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "devicename": "路由器"
+            }
+        },
+        {
+            "deviceid": "007",
+            "elementType": "node",
+            "x": 365,
+            "y": 500,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "client.png",
+            "warn": null,
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "devicename": "客户机01"
+            }
+        },
+        {
+            "deviceid": "008",
+            "elementType": "node",
+            "x": 465,
+            "y": 500,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "client.png",
+            "warn": null,
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "devicename": "客户机02"
+            }
+        },
+        {
+            "deviceid": "009",
+            "elementType": "node",
+            "x": 165,
+            "y": 500,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "client.png",
+            "warn": null,
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "devicename": "客户机03"
+            }
+        },
+        {
+            "deviceid": "010",
+            "elementType": "node",
+            "x": 265,
+            "y": 500,
+            "width": "21",
+            "height": "51",
+            "scaleX": "1",
+            "scaleY": "1",
+            "zIndex": "1",
+            "linkType": "link",
+            "nodeImage": "client.png",
+            "warn": null,
+            "alert": "负载异常",
+            "description": {
+                "IP": "192.168.12.176",
+                "port": "8080",
+                "devicename": "客户机04"
+            }
+        },
+        {
+            "deviceid": "011",
+            "elementType": "link",
+            "deviceA": "006",
+            "deviceZ": "004",
+            "scaleX": "1",
+            "scaleY": "1",
+            "linkType": "link"
+        }
+    ]
+}

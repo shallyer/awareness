@@ -1,0 +1,1556 @@
+﻿<template>
+	<div class="assetManagement clearfix">
+		<div class="leftContent">
+			<div class="box-card asset-content1">
+				<h3 class="card-header">资产扫描</h3>
+				<div class="card-body">
+					<el-form ref="form" :model="form" label-width="80px">
+						<el-form-item label="扫描目标">
+							<el-input v-model="form.name"></el-input>
+						</el-form-item>
+						<el-form-item label="扫描器">
+							<el-select v-model="form.region">
+								<el-option label="扫描器一" value="0"></el-option>
+								<el-option label="扫描器二" value="1"></el-option>
+								<el-option label="其他" value="2"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="扫描类型">
+							<el-select v-model="form.region">
+								<el-option label="ping" value="0"></el-option>
+								<el-option label="Fast Scan" value="1"></el-option>
+								<el-option label="Normal" value="2"></el-option>
+								<el-option label="Full Scan" value="3"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="扫描速度">
+							<el-select v-model="form.region">
+								<el-option label="Paranoid" value="0"></el-option>
+								<el-option label="Sneaky" value="1"></el-option>
+								<el-option label="Polite" value="2"></el-option>
+								<el-option label="Normal" value="3"></el-option>
+								<el-option label="Agreessive" value="4"></el-option>
+								<el-option label="Insane" value="5"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item style="margin-bottom:0px;">
+							<el-checkbox-group v-model="form.type">
+								<el-checkbox label="是否自动反向DNS解析" name="type"></el-checkbox>
+							</el-checkbox-group>
+						</el-form-item>
+						<el-form-item style="margin-bottom:0px;">
+							<el-checkbox-group v-model="form.type">
+								<el-checkbox label="自动检测系统" name="type"></el-checkbox>
+							</el-checkbox-group>
+						</el-form-item>
+						<el-form-item style="text-align:right;padding-right:20px;margin:0;">
+							<el-button type="primary" @click="onSubmit">开始扫描</el-button>
+						</el-form-item>
+					</el-form>
+				</div>
+			</div>
+			<div class="box-card asset-content2">
+				<h3 class="card-header">历史扫描记录</h3>
+				<div class="card-body">
+					<el-table :data="tableData" stripe style="width: 100%">
+						<el-table-column prop="destination" label="目标" style="width:43%;">
+						</el-table-column>
+						<el-table-column prop="scanner" label="扫描器" style="width:32%;">
+						</el-table-column>
+						<el-table-column label="进度" style="width:25%;">
+							<template scope="props">
+								<el-progress :percentage="props.row.progress"></el-progress>
+							</template>
+						</el-table-column>
+					</el-table>
+				</div>
+			</div>
+		</div>
+		<div class="rightContent">
+			<el-tabs type="border-card">
+				<el-tab-pane>
+					<span slot="label"><i class="el-icon-date"></i> 资产列表</span>
+					<div class="box-card asset-content3">
+						<div class="card-body">
+							<el-form ref="form" :model="form" class="content3Form">
+								<el-form-item label="主机名：">
+									<el-input></el-input>
+								</el-form-item>
+								<el-form-item label="IP地址：">
+									<el-input></el-input>
+								</el-form-item>
+								<el-form-item label="设备类型：" style="width:31%;">
+									<el-input></el-input>
+								</el-form-item>
+								<el-button type="primary" style="margin-left:1%;padding:0px 10px;height:30px;line-height: 30px;position:relative;top:3px;" icon="search">查询</el-button>
+							</el-form>
+							<div class="editArea">
+								<el-button type="success" @click="handleAdd"><i class="el-icon-plus"></i> 添加</el-button>
+								<el-button type='danger' @click="deleteSelection(multipleSelection1,tableData2)"><i class="el-icon-delete"></i> 删除</el-button>
+							</div>
+							<el-dialog title="添加信息" :visible.sync="addFormVisible" size="small" class="commonDialog">
+								<el-form class="addForm" :model="addForm" :rules="addFormRules" ref="addForm">
+									<el-form-item label="主机名" label-width="80px" prop="hostname">
+										<el-input v-model="addForm.hostname">
+										</el-input>
+									</el-form-item>
+									<el-form-item label="Ip地址" label-width="80px" prop="IP">
+										<el-input v-model="addForm.ipAddress">
+										</el-input>
+									</el-form-item>
+									<el-form-item label="设备类型" label-width="80px" prop="type">
+										<el-input v-model="addForm.deviceType">
+										</el-input>
+									</el-form-item>
+									<el-form-item label="操作系统" label-width="80px" prop="system">
+										<el-input v-model="addForm.system">
+										</el-input>
+									</el-form-item>
+									<el-form-item label="资产等级" label-width="80px" prop="grade">
+										<el-select v-model="addForm.assetGrade">
+											<el-option label="1" value="1"></el-option>
+											<el-option label="2" value="2"></el-option>
+											<el-option label="3" value="3"></el-option>
+											<el-option label="4" value="4"></el-option>
+											<el-option label="5" value="5"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-form>
+								<div slot="footer" class="dialog-footer addFooter">
+									<el-button @click="addFormVisible = false">取 消</el-button>
+									<el-button type="primary" @click="addSubmit">确认添加</el-button>
+								</div>
+							</el-dialog>
+						</div>
+					</div>
+					<div class="commonTable">
+						<el-table :data="tableData2" highlight-current-row v-loading="tableData2Loading" border stripe style="width: 100%" @selection-change="handleSelectionChange1">
+							<el-table-column type="selection" width="55">
+							</el-table-column>
+							<el-table-column prop="hostName" label="主机名" width="180" show-overflow-tooltip='true'>
+							</el-table-column>
+							<el-table-column prop="ipAddress" label="IP地址" width="180" show-overflow-tooltip='true'>
+							</el-table-column>
+							<el-table-column prop="deviceType" label="设备类型" width="180" show-overflow-tooltip='true'>
+							</el-table-column>
+							<el-table-column prop="system" label="操作系统" show-overflow-tooltip='true'>
+							</el-table-column>
+							<el-table-column prop="assetGrade" label="资产等级" width="120">
+							</el-table-column>
+							<el-table-column label="操作" width="160">
+								<template scope="scope">
+									<el-button size="small" @click="handleEdit(scope.$index,scope.row)"><i class="el-icon-edit"></i></el-button>
+									<el-dialog title="修改信息" :visible.sync="dialogFormVisible1" size="small" class="commonDialog">
+										<p class="common-title">当前IP：{{selectTable.IP}}</p>
+										<el-form :model="selectTable" ref="editForm" :rules="editFormRules">
+											<el-form-item label="设备类型" :label-width="formLabelWidth" prop="type">
+												<el-input v-model="selectTable.type">
+												</el-input>
+											</el-form-item>
+											<el-form-item label="操作系统" :label-width="formLabelWidth" prop="system">
+												<el-input v-model="selectTable.system">
+												</el-input>
+											</el-form-item>
+											<el-form-item label="资产等级" :label-width="formLabelWidth">
+												<el-select v-model="selectTable.grade">
+													<el-option label="1" value="1"></el-option>
+													<el-option label="2" value="2"></el-option>
+													<el-option label="3" value="3"></el-option>
+													<el-option label="4" value="4"></el-option>
+													<el-option label="5" value="5"></el-option>
+												</el-select>
+											</el-form-item>
+										</el-form>
+										<el-tabs type="border-card">
+											<el-tab-pane label="服务">
+												<p class="operateArea">
+													<el-popover class="addRow1" placement="right-start" width="290" trigger="click">
+														<el-form label-position="left" inline class="demo-table-expand">
+															<el-form-item label="端口" label-width="80px">
+																<el-input v-model="addForm2.port">
+																</el-input>
+															</el-form-item>
+															<el-form-item label="协议" label-width="80px">
+																<el-input v-model="addForm2.protocol">
+																</el-input>
+															</el-form-item>
+															<el-form-item label="名称" label-width="80px">
+																<el-input v-model="addForm2.name">
+																</el-input>
+															</el-form-item>
+															<el-form-item label="状态" label-width="80px">
+																<el-input v-model="addForm2.status">
+																</el-input>
+															</el-form-item>
+															<el-form-item label="是否为重要服务" label-width="80px">
+																<el-input v-model="addForm2.isIM">
+																</el-input>
+															</el-form-item>
+															<el-button @click="cancleAdd">取消</el-button>
+															<el-button type="primary" @click="addSubmit2">确认添加</el-button>
+														</el-form>
+														<div class="pop-arrow"></div>
+													</el-popover>
+													<el-button type="success" @click="popAddShow"><i class="el-icon-plus"></i> 添加</el-button>
+													<el-button type="danger" @click="deleteSelection(multipleSelection2,selectTable.service)"><i class="el-icon-delete"></i> 删除</el-button>
+												</p>
+												<el-table class="serviceTable" height="250" :data="selectTable.service" :row-key="getRowKeys" :expand-row-keys="expands" border stripe style="width: 100%" @selection-change="handleSelectionChange2">
+													<el-table-column type="selection" width="55">
+													</el-table-column>
+													<el-table-column prop="name" label="名称">
+													</el-table-column>
+													<el-table-column prop="port" label="端口">
+													</el-table-column>
+													<el-table-column prop="protocol" label="协议">
+													</el-table-column>
+													<el-table-column prop="status" label="状态">
+													</el-table-column>
+													<el-table-column prop="isIM" label="是否为重要服务">
+													</el-table-column>
+													<el-table-column type="expand">
+														<template scope="props">
+															<el-form label-position="left" inline class="demo-table-expand">
+																<el-row class="editRow">
+																	<el-col :span="8">
+																		<el-form-item label="名称">
+																			<el-input v-model="props.row.name"></el-input>
+																		</el-form-item>
+																	</el-col>
+																	<el-col :span="8">
+																		<el-form-item label="端口">
+																			<el-input v-model="props.row.port"></el-input>
+																		</el-form-item>
+																	</el-col>
+																	<el-col :span="8">
+																		<el-form-item label="协议">
+																			<el-input v-model="props.row.protocol"></el-input>
+																		</el-form-item>
+																	</el-col>
+																	<el-col :span="8">
+																		<el-form-item label="状态">
+																			<el-input v-model="props.row.status"></el-input>
+																		</el-form-item>
+																	</el-col>
+																	<el-col :span="8">
+																		<el-form-item label="是否为重要服务">
+																			<el-input v-model="props.row.isIM"></el-input>
+																		</el-form-item>
+																	</el-col>
+																</el-row>
+																<el-button type="primary" @click="editRow(props.row.id)">确认修改</el-button>
+															</el-form>
+														</template>
+													</el-table-column>
+												</el-table>
+											</el-tab-pane>
+											<el-tab-pane label="其他">其他</el-tab-pane>
+										</el-tabs>
+										<div slot="footer" class="dialog-footer">
+											<el-button @click="dialogFormVisible1 = false">取 消</el-button>
+											<el-button type="primary" @click="editSubmit" :loading="editLoading">提交</el-button>
+										</div>
+									</el-dialog>
+									<el-button size="small" @click="detailDialog(scope.$index,scope.row)"><i class="el-icon-more"></i></el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<!--分页-->
+						<div class="pagination">
+							<el-pagination @current-change="handleCurrentChange" layout="total, prev, pager, next, jumper" :page-size="5" :total="total">
+							</el-pagination>
+						</div>
+					</div>
+				</el-tab-pane>
+				<el-tab-pane>
+					<span slot="label"><i class="el-icon-picture"></i> 拓扑图</span>
+					<topo></topo>
+				</el-tab-pane>
+			</el-tabs>
+		</div>
+		<div class="detailDialogMask" v-show="detailDialogShow">
+			<div class="detailDialog">
+				<div class="detail-header">
+					<span class="detail-title">详细信息</span>
+					<i class="el-icon-close detailClose" @click="detailDialogShow=false"></i>
+					<p class="common-title" style="padding:16px 0 0 0;">当前IP：{{selectTable.IP}}</p>
+				</div>
+				<div class="detail-body">
+					<el-collapse v-model="activeNames" @change="handleChange">
+						<el-collapse-item title="基本信息" name="1">
+							<div class="baseInfo" v-for="item in baseInfo">
+								<p class="baseTitle">{{item.header}}</p>
+								<div class="baseInfoChart"></div>
+								<p class="baseBottom">{{item.bottom}}</p>
+							</div>
+							<div v-if="baseInfoVisible" class="baseInfoMask">该功能暂未开通<br /><span @click="drawOpen">去开通</span></div>
+
+						</el-collapse-item>
+						<el-collapse-item title="统计信息" name="2">
+							<el-row>
+								<el-col :span="6">
+									<div id="chart01" class="chart" style="width:250px; height:160px;"></div>
+								</el-col>
+								<el-col :span="6">
+									<div id="chart02" class="chart" style="width:250px; height:160px;"></div>
+								</el-col>
+								<el-col :span="6">
+									<div id="chart03" class="chart" style="width:250px; height:160px;"></div>
+								</el-col>
+								<el-col :span="6">
+									<div id="chart04" class="chart" style="width:250px; height:160px;"></div>
+								</el-col>
+							</el-row>
+							<el-tabs type="border-card" class="commonTable">
+								<el-tab-pane label="漏洞">
+									<el-table class="serviceTable" height="250" :data="tableData3.loophole" border stripe style="width: 100%" @selection-change="handleSelectionChange2">
+										<el-table-column prop="time" label="时间">
+										</el-table-column>
+										<el-table-column prop="Hrisk" label="高危">
+										</el-table-column>
+										<el-table-column prop="Mrisk" label="中危">
+										</el-table-column>
+										<el-table-column prop="Lrisk" label="低危">
+										</el-table-column>
+										<el-table-column prop="leakage" label="信息泄露">
+										</el-table-column>
+										<el-table-column prop="score" label="主机风险评分">
+										</el-table-column>
+										<el-table-column prop="status" label="扫描状态">
+										</el-table-column>
+									</el-table>
+								</el-tab-pane>
+								<el-tab-pane label="报警">
+									<el-table class="serviceTable" height="250" :data="tableData3.alert" border stripe style="width: 100%" @selection-change="handleSelectionChange2">
+										<el-table-column prop="time" label="时间">
+										</el-table-column>
+										<el-table-column prop="status" label="状态">
+										</el-table-column>
+										<el-table-column prop="threaten" label="威胁">
+										</el-table-column>
+										<el-table-column prop="method" label="威胁方法">
+										</el-table-column>
+										<el-table-column prop="OTX" label="威胁情报源">
+										</el-table-column>
+										<el-table-column prop="source" label="源地址">
+										</el-table-column>
+										<el-table-column prop="destination" label="目的地址">
+										</el-table-column>
+									</el-table>
+								</el-tab-pane>
+								<el-tab-pane label="事件">
+									<el-table class="serviceTable" height="250" :data="tableData3.event" border stripe style="width: 100%" @selection-change="handleSelectionChange2">
+										<el-table-column prop="time" label="时间">
+										</el-table-column>
+										<el-table-column prop="eventName" label="事件名">
+										</el-table-column>
+										<el-table-column prop="source" label="源地址">
+										</el-table-column>
+										<el-table-column prop="destination" label="目的地址">
+										</el-table-column>
+										<el-table-column prop="collector" label="采集器">
+										</el-table-column>
+										<el-table-column prop="risk" label="风险">
+										</el-table-column>
+									</el-table>
+								</el-tab-pane>
+								<el-tab-pane label="服务">
+									<el-table class="serviceTable" height="250" :data="selectTable.service" :row-key="getRowKeys" :expand-row-keys="expands" border stripe style="width: 100%" @selection-change="handleSelectionChange2">
+										<el-table-column type="selection" width="55">
+										</el-table-column>
+										<el-table-column prop="name" label="名称">
+										</el-table-column>
+										<el-table-column prop="port" label="端口">
+										</el-table-column>
+										<el-table-column prop="protocol" label="协议">
+										</el-table-column>
+										<el-table-column prop="status" label="状态">
+										</el-table-column>
+										<el-table-column prop="isIM" label="是否为重要服务">
+										</el-table-column>
+									</el-table>
+								</el-tab-pane>
+							</el-tabs>
+						</el-collapse-item>
+					</el-collapse>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	var common_tools = require("common_tools");
+	import topo from './topo.vue';
+	require("../../../public_resource/vendor/echarts-liquidfill.min.js");
+	export default {
+		components:{topo},
+		data() {
+			return {
+				total: '',
+				users: [],
+				listLoading: false,
+				filters: {
+					name: ''
+				},
+				editLoading: false,
+				editFormRules: {
+					type: [{
+						required: true,
+						message: '请输入类型',
+						trigger: 'blur'
+					}],
+					system: [{
+						required: true,
+						message: '请输入系统名称',
+						trigger: 'blur'
+					}]
+				},
+				//编辑界面数据
+				editForm: {
+					type: '',
+					grade: '',
+				},
+				addFormVisible: false, //新增界面是否显示
+				tableData2Loading: true,
+				addFormRules: {
+					hostname: [{
+						required: true,
+						message: '请输入主机名',
+						trigger: 'blur'
+					}],
+					ipAddress: [{
+						required: true,
+						message: '请输入IP',
+						trigger: 'blur'
+					}],
+					deviceType: [{
+						required: true,
+						message: '请输入类型',
+						trigger: 'blur'
+					}],
+					system: [{
+						required: true,
+						message: '请输入系统名称',
+						trigger: 'blur'
+					}],
+					assetGrade: [{
+						required: true,
+						message: '请输入等级',
+						trigger: 'blur'
+					}],
+				},
+				//新增界面数据
+				addForm: {
+					hostname: '',
+					ipAddress: '',
+					deviceType: '',
+					system: '',
+					assetGrade: ''
+				},
+				addForm2: {
+					port: '',
+					protocol: '',
+					name: '',
+					status: '',
+					isIM: ''
+				},
+				expands: [],
+				form: {
+					name: '',
+					region: '',
+					date1: '',
+					date2: '',
+					delivery: false,
+					type: [],
+					resource: '',
+					desc: ''
+				},
+				dialogFormVisible1: false,
+				detailDialogShow: false,
+				selectTable: {},
+				formLabelWidth: "80px",
+				activeName2: "first",
+				multipleSelection1: [],
+				multipleSelection2: [],
+				addHostName1: '',
+				addIP1: '',
+				addType1: '',
+				addGrade1: '',
+				addHostName: '',
+				addIP: '',
+				addType: '',
+				addGrade: '',
+				cur_page: 1,
+				activeNames: ['2'],
+				baseInfoVisible:true,
+				tableData: [{
+					destination: '192.168.120.211',
+					scanner: '扫描器一',
+					progress: '0'
+				}, {
+					destination: '192.168.120.211',
+					scanner: '扫描器二',
+					progress: '25'
+				}, {
+					destination: '192.168.120.211',
+					scanner: '扫描器一',
+					progress: '75'
+				}, {
+					destination: '192.168.120.211',
+					scanner: '扫描器二',
+					progress: '100'
+				}],
+				tableData2:[],
+				tableData3: {
+					loophole: [{
+							time: '2017-06-20 15:10:51',
+							Hrisk: '2',
+							Mrisk: '6',
+							Lrisk: '10',
+							leakage: '3',
+							score: '60',
+							status: '结束'
+						},
+						{
+							time: '2017-06-20 15:10:51',
+							Hrisk: '2',
+							Mrisk: '6',
+							Lrisk: '10',
+							leakage: '3',
+							score: '60',
+							status: '结束'
+						},
+					],
+					alert: [{
+							time: '2017-06-20 15:10:51',
+							status: '结束',
+							threaten: 'N/A',
+							method: 'd',
+							OTX: 'N/A',
+							source: 'VirtuaUSMAIIInOne:49451',
+							destination: 'VirtuaUSMAIIInOne:22',
+						},
+						{
+							time: '2017-06-20 15:10:51',
+							status: '结束',
+							threaten: 'N/A',
+							method: 'd',
+							OTX: 'N/A',
+							source: 'VirtuaUSMAIIInOne:49451',
+							destination: 'VirtuaUSMAIIInOne:22',
+						}
+					],
+					event: [{
+							time: '2017-06-20 15:10:51',
+							eventName: 'N/A',
+							source: 'VirtuaUSMAIIInOne:49451',
+							destination: 'VirtuaUSMAIIInOne:49451',
+							collector: 'N/A',
+							risk: '2'
+						},
+						{
+							time: '2017-06-20 15:10:51',
+							eventName: 'N/A',
+							source: 'VirtuaUSMAIIInOne:49451',
+							destination: 'VirtuaUSMAIIInOne:49451',
+							collector: 'N/A',
+							risk: '2'
+						}
+					],
+				},
+				baseInfo: [{
+						header: '1核',
+						value: '80',
+						bottom: 'CPU'
+					},
+					{
+						header: '2G',
+						value: '0.6',
+						bottom: '内存使用率'
+					},
+					{
+						header: '数量',
+						value: '83',
+						bottom: '进程总数'
+					},
+					{
+						header: '数量',
+						value: '68',
+						bottom: 'TCP连接数'
+					},
+					{
+						header: '系统',
+						value: '80',
+						bottom: '磁盘IO'
+					},
+				],
+				chart01: null,
+				chart02: null,
+				chart03: null,
+				chart04: null
+			}
+		},
+		created() {
+			//			this.getData();
+		},
+		methods: {
+			addSubmit() {
+				var _self = this;
+				_self.$refs.addForm.validate((valid) => {
+					if(valid) {
+						_self.$confirm('确认提交吗？', '提示', {}).then(() => {
+							_self.addFormVisible = false;
+							//							_self.tableData2Loading = true;
+//							_self.tableData2.unshift(_self.addForm);
+							/*_self.addForm = {
+								hostname: '',
+								IP: '',
+								type: '',
+								system: '',
+								grade: ''
+							};*/
+							common_tools.AJAX('POST', common_tools.interfaceurl + 'safe/addAssetData', _self.addForm, function(data) {
+								if(data.flag == '0') {
+									_self.getData(1);
+								} else {
+									alert('参数错误，请重新检查');
+								}
+							}, function(data) {
+								console.log(data);
+							});
+						});
+					}
+				});
+			},
+			editRow(id) {
+				var _self = this;
+				console.log(id);
+				_self.expands = [];
+			},
+			popAddShow() {
+				$('.el-popover').show();
+			},
+			addSubmit2() {
+				var _self = this;
+				_self.selectTable.service.unshift(_self.addForm2)
+				console.log('这里添加行到后台，回调是下面代码');
+				_self.addForm2 = {
+						port: '',
+						protocol: '',
+						name: '',
+						status: '',
+						isIM: ''
+					},
+					$('.el-popover').hide();
+			},
+			cancleAdd() {
+				$('.el-popover').hide();
+			},
+			deleteSelection(item, tableData) {
+				console.log(item);
+				var _self = this;
+				common_tools.deleteSelection(item, tableData, _self);
+			},
+			handleEdit(index, row) {
+				this.dialogFormVisible1 = true;
+				this.selectTable = row;
+			},
+			detailDialog(index, row) {
+				this.selectTable = row;
+				this.detailDialogShow = true;
+				this.drawChart01();
+				this.drawChart02();
+				this.drawChart03();
+				this.drawChart04();
+			},
+			handleSelectionChange1(val) {
+				this.multipleSelection1 = val;
+			},
+			handleSelectionChange2(val) {
+				this.multipleSelection2 = val;
+			},
+			handleCurrentChange(val) {
+				this.cur_page = val;
+				this.getData(val);
+			},
+			// 获取row的key值
+			getRowKeys(row) {
+				return row.id;
+			},
+			getData(current_page) {
+				var _self = this;
+				common_tools.AJAX('POST', common_tools.interfaceurl + 'safe/assets', {
+					"page":current_page,
+					"size":'5',
+					"hostName":"",
+					"ipAddress":"",
+					"deviceType":""
+				}, function(data) {
+					if(data.flag == '0') {
+						_self.tableData2Loading = false;
+						_self.total=data.dataCount;
+						_self.tableData2 = data.data;
+					} else {
+						alert('参数错误，请重新检查');
+					}
+				}, function(data) {
+					console.log(data);
+				});
+			},
+			//显示新增界面
+			handleAdd() {
+				this.addFormVisible = true;
+				common_tools.AJAX('POST', common_tools.interfaceurl + 'safe/addAssetData', {}, function(data) {
+					if(data.flag==0){
+						_self.chart10.hideLoading();
+						
+					}else{
+						alert('传参错误');
+					}
+				}, function(data) {
+					console.log(data);
+				});
+				/*var eventId='asd';
+				alert(eventId);
+				this.$router.push({name:'monitorCenter',params:{eventId:eventId}});*/
+			},
+			//编辑
+			editSubmit() {
+				this.$refs.editForm.validate((valid) => {
+					if(valid) {
+						this.$confirm('确认提交吗？', '提示', {}).then(() => {
+							this.editLoading = true;
+							//NProgress.start();
+							let para = Object.assign({}, this.editForm);
+							para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
+							editUser(para).then((res) => {
+								this.editLoading = false;
+								//NProgress.done();
+								this.$message({
+									message: '提交成功',
+									type: 'success'
+								});
+								this.$refs['editForm'].resetFields();
+								this.dialogFormVisible1 = false;
+								this.getData();
+							});
+						});
+					}
+				});
+			},
+			drawChart01() {
+				this.chart01 = this.$echarts.init(document.getElementById('chart01'));
+				this.chart01.setOption({
+					color: ['#23b1d0', '#2da282', '#f5b54a', '#dc613a'],
+					title: {
+						text: '漏洞',
+						x: 'center',
+						textStyle:{
+							fontSize:16,
+							fontWeight:'normal'
+						}
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '漏洞',
+						type: 'pie',
+						radius: '55%',
+						data: [{
+								value: 1,
+								name: '高危'
+							},
+							{
+								value: 2,
+								name: '中危'
+							},
+							{
+								value: 3,
+								name: '低危'
+							},
+							{
+								value: 4,
+								name: '风险提示'
+							},
+
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				});
+			},
+			drawChart02() {
+				//				this.resizeCharts("chart02")
+				this.chart02 = this.$echarts.init(document.getElementById('chart02'));
+				this.chart02.setOption({
+					color: ['#23b1d0', '#2da282', '#f5b54a', '#dc613a'],
+					title: {
+						text: '报警',
+						x: 'center',
+						textStyle:{
+							fontSize:16,
+							fontWeight:'normal'
+						}
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '报警',
+						type: 'pie',
+						radius: '55%',
+						data: [{
+								value: 335,
+								name: '风险提示'
+							},
+							{
+								value: 310,
+								name: '低危'
+							},
+							{
+								value: 234,
+								name: '中危'
+							},
+							{
+								value: 135,
+								name: '高危'
+							},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				});
+			},
+			drawChart03() {
+				//				this.resizeCharts("chart03")
+				this.chart03 = this.$echarts.init(document.getElementById('chart03'));
+				this.chart03.setOption({
+					color: ['#23b1d0', '#2da282', '#f5b54a', '#dc613a'],
+					title: {
+						text: '事件',
+						x: 'center',
+						textStyle:{
+							fontSize:16,
+							fontWeight:'normal'
+						}
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '事件',
+						type: 'pie',
+						radius: '55%',
+						data: [{
+								value: 335,
+								name: '风险提示'
+							},
+							{
+								value: 310,
+								name: '低危'
+							},
+							{
+								value: 234,
+								name: '中危'
+							},
+							{
+								value: 135,
+								name: '高危'
+							},
+
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				});
+			},
+			drawChart04() {
+				//				this.resizeCharts("chart04");
+				this.chart04 = this.$echarts.init(document.getElementById('chart04'));
+				this.chart04.setOption({
+					color: ['#23b1d0', '#2da282', '#f5b54a', '#dc613a'],
+					title: {
+						text: '服务',
+						x: 'center',
+						textStyle:{
+							fontSize:16,
+							fontWeight:'normal'
+						}
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '服务',
+						type: 'pie',
+						radius: '55%',
+						data: [{
+								value: 335,
+								name: 'TCP'
+							},
+							{
+								value: 310,
+								name: 'SSH'
+							},
+							{
+								value: 234,
+								name: 'UDP'
+							},
+							{
+								value: 135,
+								name: 'ICMP'
+							},
+
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				});
+			},
+			drawBaseInfo(baseInfo) {
+				var options = [{
+						title: {
+							text: 'CPU使用率',
+							left: '48%',
+							top: '43%',
+							textAlign: "center",
+							subtext: baseInfo[1].value + '%',
+							"textStyle": {
+								"fontWeight": 'normal',
+								"fontSize": 13
+							},
+							"subtextStyle": {
+								"fontWeight": 'bold',
+								"fontSize": 14,
+								"color": '#3ea1ff'
+							}
+						},
+						series: [{
+								"name": ' ',
+								"type": 'pie',
+								"radius": ['50%', '70%'],
+								"avoidLabelOverlap": false,
+								"startAngle": 225,
+								"color": ["#9f8fc1", "transparent"],
+								"hoverAnimation": false,
+								"legendHoverLink": false,
+								"label": {
+									"normal": {
+										"show": false,
+										"position": 'center'
+									},
+									"emphasis": {
+										"show": true,
+										"textStyle": {
+											"fontSize": '30',
+											"fontWeight": 'bold'
+										}
+									}
+								},
+								"labelLine": {
+									"normal": {
+										"show": false
+									}
+								},
+								"data": [{
+									"value": 75,
+									"name": '1'
+								}, {
+									"value": 25,
+									"name": '2'
+								}]
+							},
+							{
+								"name": '',
+								"type": 'pie',
+								"radius": ['52%', '68%'],
+								"avoidLabelOverlap": false,
+								"startAngle": 317,
+								"color": ["#fff", "transparent"],
+								"hoverAnimation": false,
+								"legendHoverLink": false,
+								"clockwise": false,
+								"itemStyle": {
+									"normal": {
+										"borderColor": "transparent",
+										"borderWidth": "24"
+									},
+									"emphasis": {
+										"borderColor": "transparent",
+										"borderWidth": "24"
+									}
+								},
+								"z": 10,
+								"label": {
+									"normal": {
+										"show": false,
+										"position": 'center'
+									},
+									"emphasis": {
+										"show": true,
+										"textStyle": {
+											"fontSize": '30',
+											"fontWeight": 'bold'
+										}
+									}
+								},
+								"labelLine": {
+									"normal": {
+										"show": false
+									}
+								},
+								"data": [{
+									//										 "value": (100 - value1) * 266 / 360,
+									"value": 20 * 266 / 360,
+									"name": ''
+								}, {
+									// "value": 100 - (100 - value1) * 266 / 360,
+									"value": 100 - 20 * 266 / 360,
+									"name": ''
+								}]
+							}
+
+						]
+					},
+					{
+						series: [{
+							type: 'liquidFill',
+							data: [baseInfo[1].value, 0.5, 0.4, 0.3],
+							radius: '70%',
+							outline: {
+								show: false
+							}
+						}]
+					},
+					{
+						tooltip: {
+							formatter: "{a} <br/>{b} : {c}%"
+						},
+						series: [{
+							type: 'gauge',
+							center: ['50%', '60%'],
+							radius: '90%',
+							startAngle: 180,
+							endAngle: 0,
+							min: 0,
+							max: 250,
+							axisLine: { // 坐标轴线
+								lineStyle: { // 属性lineStyle控制线条样式
+									width: 15
+								}
+							},
+							axisTick: { // 坐标轴小标记
+								show: false
+							},
+							axisLabel: {
+								distance: "-70",
+								textStyle: {
+									fontSize: 16,
+								},
+								formatter: function(v) {
+									switch(v + '') {
+										case '0':
+											return 'min';
+										case '250':
+											return 'max';
+									}
+								},
+								color: 'auto',
+							},
+							splitLine: {
+								show: false
+							},
+							pointer: {
+								width: 3,
+								length: '70%'
+							},
+							detail: {
+								formatter: '{value}',
+								offsetCenter: [0, '30%'],
+								textStyle: {
+									fontSize: 16
+								}
+							},
+							data: [{
+								value: baseInfo[3].value,
+							}]
+						}]
+					},
+					{
+						tooltip: {
+							formatter: "{a} <br/>{c} {b}"
+						},
+
+						series: [{
+								type: 'gauge',
+								z: 3,
+								min: 0,
+								max: 65535,
+								//								splitNumber: 5,
+								radius: '75%',
+								axisLine: { // 坐标轴线
+									lineStyle: { // 属性lineStyle控制线条样式
+										width: 8
+									}
+								},
+								axisLabel: {
+									show: false
+								},
+								axisTick: { // 坐标轴小标记
+									length: 10, // 属性length控制线长
+									lineStyle: { // 属性lineStyle控制线条样式
+										color: 'auto'
+									}
+								},
+								splitLine: { // 分隔线
+									length: 12, // 属性length控制线长
+									lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+										color: 'auto'
+									}
+								},
+								pointer: {
+									width: 4,
+									length: "70%"
+								},
+								title: {
+									textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+										fontWeight: 'bolder',
+										fontSize: 20,
+										fontStyle: 'italic'
+									}
+								},
+								detail: {
+									textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+										fontWeight: 'bolder',
+										fontSize: 16
+									}
+								},
+								data: [{
+									value: 40,
+								}]
+							},
+
+						]
+					},
+					{
+						color: ['#3398DB'],
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							},
+							formatter: "{c} M/S"
+						},
+						grid: {
+							left: '13%',
+							right: '13%',
+							bottom: '12%',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['读', '写'],
+							axisTick: {
+								alignWithLabel: true
+							}
+						}],
+						yAxis: [{
+							name: '读写速度（M/S）',
+							min:0,
+							max:600,
+							interval:200,
+							type: 'value'
+						}],
+						series: [{
+							name: '速度',
+							type: 'bar',
+							barWidth: '20%',
+							barGap: '20',
+							data: [368, 206]
+						}]
+					}
+				]
+				var _self = this;
+				for(var i = 0; i < options.length; ++i) {
+					var chart = this.$echarts.init($('.baseInfoChart')[i]);
+
+					/*if(i > 0) {
+						options[i].series[0].silent = true;
+					}*/
+					chart.setOption(options[i]);
+					chart.setOption({
+						baseOption: options[i],
+						media: [{
+							query: {
+								maxWidth: 300
+							},
+							option: {
+								series: [{
+									label: {
+										normal: {
+											textStyle: {
+												fontSize: 16
+											}
+										}
+									}
+								}]
+							}
+						}]
+					});
+				}
+			},
+			drawOpen(){
+				this.baseInfoVisible=false;
+				this.drawBaseInfo(this.baseInfo);
+			}
+		},
+		
+		mounted: function() {
+			this.getData(1);
+		}
+	}
+</script>
+<style>
+	.box-card {
+		border-radius: 6px;
+		background-color: #fff;
+		overflow: hidden;
+	}
+	
+	.card-header {
+		font-size: 1.4rem;
+		color: #fff;
+		padding-left: 14px;
+		background: #737e8d;
+		height: 42px;
+		line-height: 42px;
+	}
+	
+	.card-body {
+		padding: 14px 20px 14px 10px;
+	}
+	
+	.card-body .el-input__inner {
+		height: 30px;
+	}
+	
+	.card-body .el-select {
+		width: 100%;
+	}
+	
+	.card-body .el-form-item {
+		margin-bottom: 20px;
+		margin-bottom: 14px;
+	}
+	
+	.card-body .el-button {
+		padding: 10px;
+	}
+	
+	.leftContent,
+	.rightContent {
+		float: left;
+		margin-left: 1.5%;
+	}
+	
+	.leftContent {
+		width: 20%;
+	}
+	
+	.rightContent {
+		width: 75%;
+		overflow: hidden;
+		box-shadow: 0 4px 10px #ccc;
+	}
+	
+	.el-tabs.el-tabs--border-card {
+		border-radius: 6px;
+		overflow: hidden;
+	}
+	
+	.asset-content1 {
+		box-shadow: 0 4px 10px #ccc;
+	}
+	
+	.asset-content2 {
+		margin-top: 30px;
+		box-shadow: 0 4px 10px #ccc;
+	}
+	
+	.asset-content2 .card-body {
+		padding-right: 10px;
+	}
+	
+	.card-body .el-table th,
+	.card-body .el-table td {
+		padding: 5px 0;
+		text-align: center;
+	}
+	
+	.card-body .el-table .cell {
+		padding: 0;
+	}
+	.commonTable .cell.el-tooltip{
+		width:100% !important;
+	}
+	.asset-content3 {
+		border: 1px solid #ddd;
+		border-radius: 4px;
+	}
+	
+	.asset-content3 .card-body {
+		padding-right: 10px;
+	}
+	
+	.asset-content3 .card-body .el-form-item {
+		width: 28%;
+		float: left;
+	}
+	
+	.content3Form {
+		display: inline-block;
+		width: 72%;
+		margin-top: 18px;
+	}
+	
+	.asset-content3 .el-form-item__label {
+		width: 38%;
+		padding: 11px 0;
+		text-align: center;
+	}
+	
+	.asset-content3 .el-form-item .el-form-item__content {
+		display: inline-block;
+		width: 62%;
+	}
+	
+	.asset-content3 .el-form-item .el-form-item__content .el-input input {
+		width: 100%;
+	}
+	
+	.editArea {
+		width: 28%;
+		float: right;
+		padding: 16px 10px;
+		border-radius: 6px;
+		background: #eee;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	.asset-content3 .specialFormItem .el-form-item {
+		width: 26%;
+	}
+	
+	.specialFormItem .el-form-item__label {
+		width: 25%;
+	}
+	
+	.asset-content3 .specialFormItem .el-form-item__content {
+		width: 70%;
+	}
+	
+	.commonDialog .el-form-item__content .el-select {
+		width: 100%;
+	}
+	
+	.editRow .el-form-item {
+		width: 100%;
+		margin-right: 0 !important;
+	}
+	
+	.editRow label {
+		width: 38%;
+		padding-right: 0;
+		text-align: center !important;
+	}
+	
+	.editRow .el-form-item__content {
+		width: 62%;
+	}
+	
+	.demo-table-expand {
+		padding: 15px 0 15px 0;
+	}
+	
+	.operateArea {
+		padding-bottom: 20px;
+		text-align: right;
+	}
+	
+	.el-popover {
+		position: fixed;
+		left: 91%;
+	}
+	
+	.pop-arrow {
+		position: absolute;
+		top: 10px;
+		left: -6px;
+		width: 0;
+		height: 0;
+		border-width: 6px;
+		border-color: transparent;
+		border-style: solid;
+		border-right-color: #d1dbe5;
+		border-left-width: 0;
+	}
+	
+	.el-dialog {
+		border-radius: 5px;
+	}
+	
+	.asset-content3 .addForm .el-form-item {
+		float: none;
+		width: auto;
+		margin-bottom: 22px;
+	}
+	
+	.asset-content3 .addForm .el-form-item label {
+		float: left;
+	}
+	
+	.asset-content3 .addForm .el-form-item .el-form-item__content {
+		display: block;
+		width: auto;
+	}
+	
+	.addForm .el-input__inner {
+		height: 36px;
+	}
+	
+	.el-dialog__body {
+		padding-bottom: 20px;
+	}
+	
+	.addFooter {
+		position: relative;
+		top: -10px;
+	}
+	
+	.detailDialogMask {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		overflow: auto;
+		z-index: 9999;
+		background: rgba(0, 0, 0, .6)
+	}
+	
+	.detailDialog {
+		position: absolute;
+		top: 15%;
+		left: 50%;
+		width: 57%;
+		transform: translateX(-50%);
+		border-radius: 5px;
+		background: #fff;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+		box-sizing: border-box;
+	}
+	
+	.detail-header {
+		padding: 20px 20px 0;
+	}
+	
+	.detail-title {
+		line-height: 1;
+		font-size: 16px;
+		font-weight: 700;
+		color: #1f2d3d;
+	}
+	
+	.detail-body {
+		padding: 20px;
+		color: #48576a;
+		font-size: 14px;
+	}
+	
+	.detailClose {
+		color: #bfcbd9;
+		font-weight: 400;
+		float: right;
+		cursor: pointer;
+	}
+	
+	.common-title {
+		text-align: left;
+		font-size: 1.4rem;
+		padding-bottom: 22px;
+		text-indent: 1em;
+	}
+	
+	.chart {
+		margin: 0 auto;
+	}
+	
+	.baseInfo {
+		float: left;
+		width: 250px;
+		height: 200px;
+	}
+	
+	.baseInfo>p {
+		text-align: center;
+	}
+	
+	.baseInfoChart {
+		width: 250px;
+		height: 160px;
+	}
+	
+	.baseTitle {
+		position: relative;
+		top: 15px;
+	}
+	
+	.baseBottom {
+		position: relative;
+		bottom: 15px;
+	}
+	.el-collapse-item__wrap{
+		position:relative;
+	}
+	.baseInfoMask{
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		background:rgba(255,255,255,.8);
+		text-align:center;
+		color:#c00;
+		padding-top:200px;
+		box-sizing: border-box;
+	}
+	.baseInfoMask span{
+		color:#0c0;
+		cursor:pointer;
+		text-decoration:underline;
+	}
+</style>

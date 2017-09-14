@@ -1,0 +1,196 @@
+.sAnalsis_root {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.sAnalysis_echart_middle {
+    width: 30%;
+    height: 100%;
+    float: left;
+    padding-left: 15px;
+    box-sizing: border-box;
+    margin-top: 1%;
+}
+
+.sAnalsis_left {
+    width: 40%;
+    height: 100%;
+    float: left;
+    margin-top: 1%;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+.sAnalsis_right {
+    width: 30%;
+    height: 100%;
+    padding-left: 15px;
+    box-sizing: border-box;
+    float: left;
+    margin-top: 1%;
+}
+
+.sAnalsis_left .worldMap {
+    width: 100%;
+    height: 62%;
+    background: rgba(255, 255, 255, .1)!important;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.sAnalsis_root .sAnalsis_left .count {
+    width: 100%;
+    height: 5%;
+    background-size: cover;
+    z-index: 99999;
+    background: rgba(255, 255, 255, .1)!important;
+    border: 1px solid #1f2e4f;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-top: 1%;
+}
+
+.sAnalsis_root .sAnalsis_left .count p:first-child {
+    margin-left: 35%;
+}
+
+.sAnalsis_root .sAnalsis_left .count p {
+    color: #c9daf4;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 2%;
+    width: 10%;
+    height: 75%;
+    border: 1px solid #c9daf4;
+    float: left;
+    border-radius: 4px;
+    margin-top: 0.3%;
+    text-align: center;
+}
+
+.sAnalsis_root .sAnalsis_left .count_map {
+    width: 100%;
+    height: 31%;
+    margin-top: 15px;
+    position: relative;
+}
+
+.sAnalsis_root .sAnalsis_left .count_map .count_map_left {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    position: absolute;
+}
+
+.sAnalsis_root .sAnalsis_left .count_map .count_map_right {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    left: 51%;
+    position: absolute;
+}
+
+.sAnalsis_root .sAnalsis_left .count ul {
+    width: 100%;
+    height: 100%;
+}
+
+.sAnalsis_root .sAnalsis_left .count ul li {
+    width: 15%;
+    height: 45%;
+    background-size: cover;
+    float: left;
+    margin-left: 2%;
+    font-size: 2rem;
+    padding: 0.5%;
+    border: 1px solid #BFE4FF;
+    background-color: #E8F5FF;
+    color: #46A5FF;
+}
+
+.sAnalsis_right_chart_line {
+    width: 100%;
+    height: 30%;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.sAnalsis_right_chart_pie {
+    width: 100%;
+    height: 31%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.sAnalysis_rigth_chart_two {
+    width: 100%;
+    height: 30%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.sAnalysis_echart_middle_Three .publicchart div {
+    width: 46%;
+    height: 45%;
+    float: left;
+    margin-left: 1%;
+    font-size: 1.6rem;
+    line-height: 35px;
+    padding-left: 2%;
+    color: #25C3F0;
+    text-align: center;
+    line-height: 80px;
+}
+
+.sAnalysis_echart_middle_One {
+    width: 100%;
+    height: 30%;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.sAnalysis_echart_middle_Two {
+    width: 100%;
+    height: 30%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.sAnalysis_echart_middle_Three {
+    width: 100%;
+    height: 31%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.sAnalysis_echart_middle_Three .num {
+    font-family: 'fontNameQarmicsans';
+    font-size: 2.5rem;
+    color: #FFFFFF;
+}
+
+.sAnalsis_root .public_chart_p {
+    width: 100%;
+    height: 13%;
+    line-height: 30px;
+    color: #c9daf4;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 2px;
+    padding-left: 20px;
+    background: rgba(255, 255, 255, .1)!important;
+}
+
+.sAnalsis_root .publicchart {
+    width: 100%;
+    height: 90%;
+    background: rgba(255, 255, 255, .1)!important;
+}
